@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GCash Donation</title>
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
+  <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css">
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Roboto', sans-serif;
+      background-color: #721311; 
+    }
+    .background {
+      height: 100%;
+      padding: 40px 20px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .header-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      max-width: 900px;
+      margin-bottom: 20px;
+    }
+    h1 {
+      color: white;
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin: 0;
+    }
+    h2 {
+      color: white;
+      font-size: 1.2rem;
+      margin-top: -10px;
+      margin-left: 100px;
+    }
+    .back-button {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      display: flex;
+      align-items: center;
+      --background: none;
+      --color: white;
+      --box-shadow: none;
+      --border: none;
+    }
+    .donation-amount {
+      font-size: 22px;
+      font-weight: bold;
+      margin-top: 20px;
+      color: white;
+      text-align: center;
+    }
+    .qr-container {
+      background-color: white;
+      width: 100%;
+      max-width: 300px;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    img {
+      width: 250px;
+      height: auto;
+    }
+    ion-button {
+      --background: white; 
+      --color: #721311;
+      margin-top: 20px;
+      
+    
+    }
+    ion-button.back {
+      --background: none;
+      --color: white;
+    }
+    .continueButton {
+        --background: white; 
+        --color: #721311;
+        margin-top: 20px;
+        border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="background">
+    <div class="header-container">
+      <ion-button class="back-button" onclick="goBack()">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+      <h1>DAGYAW</h1>
+      <h2><i>Filipino</i></h2>
+    </div>
+
+    
+
+    <div class="qr-container">
+      <p>Scan the QR Code to Donate</p>
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQiP44drrqBzf2SYVvVA77tDCDqJ5eCXvoNg&s" alt="QR Code">
+    </div>
+
+    <form id="gcash-form">
+      <ion-button class="continueButton" id="continueButton" expand="full" type="submit">Continue</ion-button>
+    </form>
+  </div>
+
+  <script>
+    
+    function goBack() {
+        window.location.href = 'personal-details-form.html'; 
+      }
+
+    
+    const amountDonated = localStorage.getItem('amountDonated');
+  
+   
+    if (amountDonated) {
+      document.getElementById("donationAmount").innerText = amountDonated;
+    } 
+    
+    document.getElementById('gcash-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+  
+     
+      const donation = JSON.parse(localStorage.getItem('currentDonation'));
+  
+      if (donation) {
+       const donations = JSON.parse(localStorage.getItem('donations')) || [];
+        donations.push(donation);
+  
+        localStorage.setItem('donations', JSON.stringify(donations));
+  
+        localStorage.removeItem('currentDonation');
+      }
+  
+      window.location.href = "thank-you.html";
+    });
+  </script>
+  
+  
+    
+</body>
+</html>
